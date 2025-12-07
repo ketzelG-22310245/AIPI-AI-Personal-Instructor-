@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Panel de Control - AIPI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f4f6f9;
+        padding: 40px;
+        color: #333;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+      h1 {
+        color: #0d6efd;
+        margin-bottom: 5px;
+      }
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .stat-info {
+        width: 30%;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .progress-container {
+        width: 40%;
+        background: #e9ecef;
+        height: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0 20px;
+      }
+      .progress-bar {
+        height: 100%;
+        background: #28a745;
+        transition: width 0.5s;
+      }
+
+      .stat-numbers {
+        width: 30%;
+        text-align: right;
+        font-size: 0.9rem;
+        color: #555;
+      }
+      .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      .badge-green {
+        background: #d4edda;
+        color: #155724;
+      }
+      .badge-red {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+      }
+      .btn-back {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #0d6efd;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>AIPI Dashboard</h1>
+      <p class="subtitle">
+        Métricas de satisfacción del Sistema Experto en tiempo real.
+      </p>
+
+      {% if total == 0 %}
+      <div class="empty-state">
+        <p>No hay datos de retroalimentación todavía.</p>
+        <p>Usa el chat y da "Me gusta" o "No me gusta" para ver datos aquí.</p>
+      </div>
+      {% else %} {% for algo, data in stats.items() %}
+      <div class="stat-card">
+        <div class="stat-info">{{ algo }}</div>
+
+        <div class="progress-container">
+          <div class="progress-bar" style="width: {{ data.percent }}%;"></div>
+        </div>
+
+        <div class="stat-numbers">
+          <span class="badge badge-green">👍 {{ data.likes }}</span>
+          <span class="badge badge-red">👎 {{ data.dislikes }}</span>
+          <br />
+          <small>{{ data.percent }}% Aprobación</small>
+        </div>
+      </div>
+      {% endfor %}
+
+      <p style="margin-top: 30px; text-align: center; color: #666">
+        <strong>Total de votos procesados:</strong> {{ total }}
+      </p>
+      {% endif %}
+
+      <center>
+        <a href="/" class="btn-back">← Volver al Chat</a>
+      </center>
+    </div>
+  </body>
+</html>

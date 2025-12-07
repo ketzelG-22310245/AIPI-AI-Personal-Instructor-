@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIPI: AI Personal Instructor</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="header-left">
+        <img
+          src="{{ url_for('static', filename='image/logo.png') }}"
+          alt="AI Brain"
+          class="logo-img"
+        />
+        <h1>AIPI: AI Personal Instructor</h1>
+      </div>
+      <nav class="header-nav">
+        <a href="#" class="active">Inicio</a>
+        <a href="javascript:void(0)" onclick="openModal('modal-quees')"
+          >¿Qué es?</a
+        >
+        <a href="javascript:void(0)" onclick="openModal('modal-tipos')"
+          >Tipos</a
+        >
+        <a href="javascript:void(0)" onclick="openModal('modal-historia')"
+          >Historia</a
+        >
+      </nav>
+      <div class="header-right">
+        <button class="btn-login">Iniciar sesión</button>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <aside class="sidebar">
+        <div class="level-card">
+          <div class="level-title">Nivel Actual:</div>
+          <div class="level-badge">{{ user_level }}</div>
+          <div class="xp-bar-container">
+            <div class="xp-bar" style="width: {{ progress }}%;"></div>
+          </div>
+        </div>
+
+        <form
+          method="POST"
+          onsubmit="return confirm('¿Estás seguro?\n\nSe borrará todo tu historial y tu nivel volverá a Novato.');"
+        >
+          <input type="hidden" name="action" value="delete_all_data" />
+          <button type="submit" class="btn-reset-all">
+            Borrar Todo y Reiniciar
+          </button>
+        </form>
+
+        <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0" />
+
+        <form method="POST">
+          <input type="hidden" name="action" value="new_chat" />
+          <button type="submit" class="new-chat-btn">New chat +</button>
+        </form>
+
+        <div class="chat-list-container">
+          <ul class="chat-list">
+            {% for chat_id in chats %}
+            <li
+              class="chat-item-row {% if chat_id == active_chat %}active{% endif %}"
+            >
+              <form method="POST" style="flex-grow: 1">
+                <input type="hidden" name="action" value="switch_chat" />
+                <input type="hidden" name="chat_id" value="{{ chat_id }}" />
+                <button type="submit" class="sidebar-chat-btn">
+                  {{ chat_id }}
+                </button>
+              </form>
+              <form
+                method="POST"
+                onsubmit="return confirm('¿Borrar este chat?');"
+              >
+                <input type="hidden" name="action" value="delete_chat" />
+                <input type="hidden" name="chat_id" value="{{ chat_id }}" />
+                <button type="submit" class="btn-delete-chat">🗑️</button>
+              </form>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <main class="chat-area">
+        <h2 class="chat-title-big">AIPI: AI Personal Instructor</h2>
+
+        <div class="messages-container" id="chat-box">
+          {% for msg in history %} {% if msg.role == 'user' %}
+          <div class="message-wrapper user">
+            <div class="chat-bubble user-bubble">{{ msg.content }}</div>
+          </div>
+
+          {% else %}
+          <div class="message-wrapper bot">
+            <div
+              class="chat-bubble bot-bubble {% if msg.type == 'result' %} result-bubble {% endif %}"
+            >
+              {% if msg.type == 'question' or msg.type == 'simple' or msg.type
+              == 'quiz_result' %}
+              <p>{{ msg.content }}</p>
+
+              {% elif msg.type == 'post_feedback' %}
+              <p>{{ msg.content }}</p>
+              <div class="post-feedback-options" style="margin-top: 15px">
+                <form method="POST" style="display: inline-block">
+                  <button
+                    type="submit"
+                    name="next_step"
+                    value="reset"
+                    class="btn-option"
+                  >
+                    Reiniciar este Chat
+                  </button>
+                </form>
+              </div>
+
+              {% elif msg.type == 'result' %}
+              <h3>Recomendación: {{ msg.algo }}</h3>
+
+              {% if msg.example.versus %}
+              <form method="POST" style="margin-top: 5px">
+                <input type="hidden" name="action" value="show_versus" />
+                <input
+                  type="hidden"
+                  name="rival"
+                  value="{{ msg.example.versus.rival }}"
+                />
+                <input
+                  type="hidden"
+                  name="comparacion"
+                  value="{{ msg.example.versus.comparacion }}"
+                />
+                <button type="submit" class="btn-versus">
+                  Comparar con {{ msg.example.versus.rival }}
+                </button>
+              </form>
+              {% endif %}
+
+              <hr style="opacity: 0.3; margin: 10px 0" />
+
+              <p class="example-title">
+                <strong>{{ msg.example.titulo }}</strong>
+              </p>
+              <p class="example-text">{{ msg.example.contexto }}</p>
+
+              <div class="steps-box">
+                <strong>Pasos:</strong>
+                <ul>
+                  {% for paso in msg.example.pasos %}
+                  <li>{{ paso }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <div class="code-box">
+                <pre><code>{{ msg.example.codigo }}</code></pre>
+              </div>
+
+              {% if msg.example.explicacion_codigo %}
+              <details class="code-explanation">
+                <summary>Explicar este código</summary>
+                <p>{{ msg.example.explicacion_codigo }}</p>
+              </details>
+              {% endif %} {% if msg.example.quiz %}
+              <div class="quiz-container">
+                <p class="quiz-title">Reto: {{ msg.example.quiz.pregunta }}</p>
+                <div class="quiz-options">
+                  {% for op in msg.example.quiz.opciones %}
+                  <form method="POST">
+                    <input type="hidden" name="action" value="answer_quiz" />
+                    <input type="hidden" name="answer" value="{{ op }}" />
+                    <input
+                      type="hidden"
+                      name="correct"
+                      value="{{ msg.example.quiz.correcta }}"
+                    />
+                    <input
+                      type="hidden"
+                      name="retro_acierto"
+                      value="{{ msg.example.quiz.retro_acierto }}"
+                    />
+                    <input
+                      type="hidden"
+                      name="retro_fallo"
+                      value="{{ msg.example.quiz.retro_fallo }}"
+                    />
+                    <button type="submit" class="btn-quiz">{{ op }}</button>
+                  </form>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+
+              <div class="feedback-section">
+                <p>¿Te fue útil?</p>
+                <div style="display: flex; gap: 10px">
+                  <form method="POST">
+                    <input type="hidden" name="action" value="feedback" />
+                    <input type="hidden" name="score" value="like" />
+                    <input type="hidden" name="algo" value="{{ msg.algo }}" />
+                    <button type="submit" class="btn-feedback like">
+                      👍 Sí
+                    </button>
+                  </form>
+                  <form method="POST">
+                    <input type="hidden" name="action" value="feedback" />
+                    <input type="hidden" name="score" value="dislike" />
+                    <input type="hidden" name="algo" value="{{ msg.algo }}" />
+                    <button type="submit" class="btn-feedback dislike">
+                      👎 No
+                    </button>
+                  </form>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if loop.last and msg.type == 'question' %}
+          <div class="options-container">
+            <form method="POST">
+              {% for opcion in msg.options %}
+              <button
+                type="submit"
+                name="next_step"
+                value="{{ opcion.next }}"
+                class="btn-option"
+                onclick="document.getElementById('hidden_text_{{ loop.index }}').name='user_text';"
+              >
+                {{ opcion.texto }}
+              </button>
+              <input
+                type="hidden"
+                id="hidden_text_{{ loop.index }}"
+                value="{{ opcion.texto }}"
+              />
+              {% endfor %}
+            </form>
+          </div>
+          {% endif %} {% if loop.last and msg.type == 'result' %}
+          <div class="action-buttons">
+            <form method="POST">
+              <button
+                type="submit"
+                name="next_step"
+                value="reload_example"
+                class="btn-action"
+              >
+                Otro ejemplo
+              </button>
+              <button
+                type="submit"
+                name="next_step"
+                value="reset"
+                class="btn-action secondary"
+              >
+                Reiniciar Chat
+              </button>
+            </form>
+          </div>
+          {% endif %} {% endif %} {% endfor %}
+          <div id="end-of-chat"></div>
+        </div>
+
+        <div class="input-area">
+          <div class="input-bar">
+            <input
+              type="text"
+              placeholder="Selecciona una opción de arriba..."
+              disabled
+            />
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="main-footer">
+      <div class="footer-left">
+        <img
+          src="{{ url_for('static', filename='image/logo.png') }}"
+          alt="brain"
+          class="logo-img"
+          style="height: 40px"
+        />
+        <span>AIPI: AI Personal Instructor</span>
+      </div>
+      <div class="footer-right">
+        <img
+          src="{{ url_for('static', filename='image/CETI_Logo.png') }}"
+          alt="Logo CETI"
+          class="ceti-logo-img"
+        />
+        <div class="footer-text">
+          <p>Proyecto de sistema experto hecho en CETI</p>
+          <p>© 2025 - Ketzel Gibran Carrillo Ibarra</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="modal-quees" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-quees')"
+          >&times;</span
+        >
+        <h2>¿Qué es un Sistema Experto?</h2>
+        <p>
+          Es un sistema informático que emula la capacidad de toma de decisiones
+          de un experto humano.
+        </p>
+        <p>
+          Utiliza una <strong>Base de Conocimientos</strong> y un
+          <strong>Motor de Inferencia</strong>.
+        </p>
+      </div>
+    </div>
+
+    <div id="modal-tipos" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-tipos')"
+          >&times;</span
+        >
+        <h2>Tipos de Machine Learning</h2>
+        <p><strong>Supervisado:</strong> Con etiquetas (ej. Clasificación).</p>
+        <p><strong>No Supervisado:</strong> Sin etiquetas (ej. Clustering).</p>
+        <p><strong>Reforzado:</strong> Por recompensas (ej. Videojuegos).</p>
+      </div>
+    </div>
+
+    <div id="modal-historia" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-historia')"
+          >&times;</span
+        >
+        <h2>Historia</h2>
+        <p>
+          El término nació en los 70s con sistemas como <strong>MYCIN</strong>.
+        </p>
+        <p>Hoy ha evolucionado hacia Deep Learning y Modelos Generativos.</p>
+      </div>
+    </div>
+
+    <script>
+      window.onload = function () {
+        var element = document.getElementById("end-of-chat");
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+      };
+      function openModal(id) {
+        document.getElementById(id).style.display = "block";
+      }
+      function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+      }
+      window.onclick = function (event) {
+        if (event.target.classList.contains("modal")) {
+          event.target.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>

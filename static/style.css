@@ -1,0 +1,612 @@
+/* =========================================
+   1. VARIABLES Y RESET
+   ========================================= */
+:root {
+    --primary-blue: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --bot-green: #28a745;
+    --bg-light: #ffffff;
+    --bg-off-white: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --footer-bg: #1a1f36;
+    --danger-red: #dc3545;
+    --danger-bg: #fff5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* FUENTE ABEL APLICADA GLOBALMENTE */
+    font-family: 'Abel', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem; 
+}
+
+/* =========================================
+   2. HEADER
+   ========================================= */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-light);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Tamaño del logo del cerebro en el header */
+.logo-img {
+    height: 45px;
+    width: auto;
+}
+
+.header-nav {
+    display: flex;
+    gap: 25px;
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.header-nav a:hover, .header-nav a.active {
+    color: var(--text-dark);
+}
+
+.btn-login {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Abel', sans-serif;
+    transition: background-color 0.2s;
+}
+
+.btn-login:hover {
+    background-color: var(--primary-hover);
+}
+
+/* =========================================
+   3. LAYOUT PRINCIPAL
+   ========================================= */
+.main-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* =========================================
+   4. SIDEBAR
+   ========================================= */
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-off-white);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Nivel */
+.level-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    text-align: center;
+}
+.level-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.level-badge {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin: 8px 0;
+}
+.xp-bar-container {
+    width: 100%;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.xp-bar {
+    height: 100%;
+    background: var(--bot-green);
+    transition: width 0.5s;
+}
+
+/* Botón Rojo (Reset) */
+.btn-reset-all {
+    width: 100%;
+    background-color: var(--danger-bg);
+    color: var(--danger-red);
+    border: 1px dashed var(--danger-red);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: all 0.2s;
+    font-family: 'Abel', sans-serif;
+}
+.btn-reset-all:hover {
+    background-color: var(--danger-red);
+    color: white;
+    border-style: solid;
+}
+
+/* Nuevo Chat */
+.new-chat-btn {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 600;
+}
+.new-chat-btn:hover {
+    background-color: #e9ecef;
+}
+
+/* Lista de Chats */
+.chat-list {
+    list-style: none;
+    padding: 0;
+    overflow-y: auto;
+}
+.chat-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    transition: background 0.2s;
+}
+.chat-item-row:hover {
+    background-color: #e2e6ea;
+}
+.chat-item-row.active {
+    background-color: #e7f1ff;
+}
+
+.sidebar-chat-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Abel', sans-serif;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.chat-item-row.active .sidebar-chat-btn {
+    color: var(--primary-blue);
+}
+
+.btn-delete-chat {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 8px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    opacity: 0.6;
+    transition: 0.2s;
+}
+.btn-delete-chat:hover {
+    opacity: 1;
+    color: var(--danger-red);
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* =========================================
+   5. CHAT AREA
+   ========================================= */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 50px;
+    background-color: var(--bg-light);
+}
+
+.chat-title-big {
+    color: var(--primary-blue);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px;
+    padding-right: 10px;
+}
+
+/* Burbujas */
+.message-wrapper {
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.message-wrapper.user {
+    justify-content: flex-end;
+}
+.message-wrapper.bot {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    max-width: 75%;
+    padding: 15px 25px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.user-bubble {
+    background-color: var(--primary-blue);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+.bot-bubble {
+    background-color: var(--bot-green);
+    color: white;
+    border-bottom-left-radius: 4px;
+}
+.result-bubble {
+    max-width: 85%;
+    background-color: #28a745;
+}
+
+/* Estilos de Contenido */
+.example-title {
+    font-size: 1.15em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+.example-text {
+    margin-bottom: 15px;
+    font-size: 1em;
+    opacity: 0.95;
+}
+
+.steps-box {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.steps-box ul {
+    padding-left: 20px;
+    margin-top: 5px;
+}
+.steps-box li {
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.code-box {
+    background-color: #1e252b;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 10px;
+}
+.code-box pre {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.95em;
+    color: #e6e6e6;
+    margin: 0;
+}
+
+/* Lupa */
+.code-explanation {
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.code-explanation summary {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    opacity: 0.95;
+}
+.code-explanation p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #f0f0f0;
+    white-space: pre-line;
+}
+
+/* Feedback */
+.feedback-section {
+    margin-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 15px;
+}
+.feedback-section p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    font-style: italic;
+}
+.btn-feedback {
+    border: 1px solid rgba(255,255,255,0.6);
+    background: transparent;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: 'Abel', sans-serif;
+    transition: 0.2s;
+}
+.btn-feedback:hover {
+    background: rgba(255,255,255,0.2);
+}
+.btn-feedback.like:hover {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+.btn-feedback.dislike:hover {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Botones Opciones y Acciones */
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+.btn-option {
+    background: white;
+    border: 1px solid var(--primary-blue);
+    color: var(--primary-blue);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+}
+.btn-option:hover {
+    background: var(--primary-blue);
+    color: white;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.btn-action {
+    padding: 10px 20px;
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Abel', sans-serif;
+    font-weight: 600;
+}
+.btn-action.secondary {
+    background: var(--text-muted);
+}
+
+/* Quiz */
+.quiz-container {
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+.quiz-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.btn-quiz {
+    background: rgba(255,255,255,0.9);
+    color: #155724;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: left;
+    transition: 0.2s;
+    font-size: 1rem;
+    font-family: 'Abel', sans-serif;
+    width: 100%;
+}
+.btn-quiz:hover {
+    background: white;
+    transform: translateX(5px);
+}
+
+/* Versus */
+.btn-versus {
+    background: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Abel', sans-serif;
+    transition: 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.btn-versus:hover {
+    background: #e0a800;
+    transform: translateY(-2px);
+}
+
+/* Input y Footer */
+.input-area {
+    margin-top: 10px;
+}
+.input-bar {
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    padding: 5px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.input-bar input {
+    width: 100%;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    outline: none;
+    background: transparent;
+    font-family: 'Abel', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.main-footer {
+    background-color: var(--footer-bg);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ESTILO NUEVO PARA EL LOGO DE CETI EN FOOTER */
+.ceti-logo-img {
+    height: 40px; /* Tamaño ajustable */
+    width: auto;
+    border-radius: 4px;
+}
+
+/* Modales */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s;
+}
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 40px;
+    border: none;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    position: relative;
+    font-family: 'Abel', sans-serif;
+}
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+.close-btn:hover {
+    color: var(--text-dark);
+}
+.modal-content h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+}
+.modal-content p {
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
