@@ -39,16 +39,6 @@ Este proyecto fue desarrollado como parte de la materia de **Sistemas Expertos**
 
 ---
 
-## 📸 Capturas de Pantalla
-
-*(Puedes agregar aquí tus capturas de pantalla guardándolas en una carpeta `screenshots`)*
-
-| Chat Interactivo | Resultado y Código |
-|:---:|:---:|
-| ![Chat](screenshots/chat_preview.png) | ![Code](screenshots/code_preview.png) |
-
----
-
 ## 🚀 Instalación y Ejecución
 
 Sigue estos pasos para correr el proyecto en tu computadora local:
@@ -76,29 +66,7 @@ python app.py
 Ve a la siguiente dirección en tu navegador web: http://127.0.0.1:5000
 
 Para ver el panel de administración, ve a: http://127.0.0.1:5000/admin
-
-📂 Estructura del Proyecto
-Plaintext
-
-/AIPI-System
-│
-├── app.py                 # Lógica del Motor de Inferencia y Servidor Flask
-├── knowledge_base.py      # Base de Conocimientos (Reglas, Quizzes, Ejemplos)
-├── requirements.txt       # Lista de librerías necesarias
-├── feedback_log.txt       # Base de datos simple (Logs de votos y actividad)
-│
-├── static/                # Archivos estáticos
-│   ├── style.css          # Hoja de estilos (Diseño System Figma)
-│   └── image/             # Logos y recursos gráficos
-│       ├── logo.png
-│       └── ceti.png
-│
-├── templates/             # Plantillas HTML
-│   ├── index.html         # Interfaz principal (Chat)
-│   └── admin.html         # Dashboard de estadísticas
-│
-└── README.md              # Documentación del proyecto
-
+---
 🧠 Base de Conocimientos
 El sistema cubre los siguientes algoritmos:
 
@@ -107,7 +75,7 @@ Regresión: Lasso, SVR, SGD Regressor.
 Clasificación: Naive Bayes, Linear SVC, KNN, Random Forest.
 
 Clustering: K-Means, DBSCAN.
-
+---
 👨‍💻 Autor
 Ketzel Gibran Carrillo Ibarra
 
