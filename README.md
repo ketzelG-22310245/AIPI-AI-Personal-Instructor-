@@ -81,6 +81,6 @@ Ketzel Gibran Carrillo Ibarra
 
 Institución: CETI (Centro de Enseñanza Técnica Industrial)
 
-Carrera: Ingeniería en Desarrollo de Software
+Carrera: Ingeniería Mecátronica
 
 Materia: Sistemas Expertos
