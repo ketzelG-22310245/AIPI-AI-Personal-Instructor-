@@ -1,3 +1,0 @@
-Voto: LIKE | Algoritmo: Random Forest | Nivel Usuario: Científico de Datos 🚀
-Voto: LIKE | Algoritmo: SGD Regressor | Nivel: Novato 🐣
-Voto: LIKE | Algoritmo: Lasso | Nivel: Estudiante 🎓
