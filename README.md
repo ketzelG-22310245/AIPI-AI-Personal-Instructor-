@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/Banner.png" alt="AIPI Banner" width="100%">
+</p>
+
 # 🧠 AIPI – AI Personal Instructor
 
 > **An Educational Expert System for Machine Learning Algorithm Selection**
