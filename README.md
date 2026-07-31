@@ -1,86 +1,296 @@
-# AIPI-AI-Personal-Instructor-
+# 🧠 AIPI – AI Personal Instructor
 
-Markdown
+> **An Educational Expert System for Machine Learning Algorithm Selection**
 
-# 🧠 AIPI: AI Personal Instructor
-> **Sistema Experto Educativo para la Selección de Algoritmos de Machine Learning**
-
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat&logo=python)
-![Flask](https://img.shields.io/badge/Flask-Web%20Framework-lightgrey?style=flat&logo=flask)
-![Status](https://img.shields.io/badge/Estado-Terminado-success)
-
-## 📖 Descripción del Proyecto
-
-**AIPI** es un Sistema Experto basado en reglas (Forward Chaining) diseñado para ayudar a estudiantes y desarrolladores a seleccionar el algoritmo de Machine Learning más adecuado para sus problemas.
-
-A diferencia de un simple árbol de decisiones, AIPI funciona como un **tutor inteligente**: no solo te da la respuesta, sino que te enseña mediante ejemplos de código ejecutables, explicaciones detalladas línea por línea, comparativas técnicas y quizzes interactivos.
-
-Este proyecto fue desarrollado como parte de la materia de **Sistemas Expertos** en **CETI**.
+![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python)
+![Flask](https://img.shields.io/badge/Flask-3.x-black?style=for-the-badge&logo=flask)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-orange?style=for-the-badge&logo=scikitlearn)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 
 ---
 
-## ✨ Características Principales
+# 📖 Overview
 
-### 🎓 Módulo Educativo
-* **Diagnóstico Guiado:** Interfaz de chat intuitiva que realiza preguntas estratégicas para filtrar opciones.
-* **Base de Conocimientos:** Cubre 9 algoritmos clave (Regresión, Clasificación y Clustering).
-* **Lupa de Código:** Explicaciones detalladas de qué hace cada línea del código generado.
-* **Modo Versus:** Comparativas técnicas entre el algoritmo recomendado y sus rivales directos.
-* **Quizzes Interactivos:** Retos rápidos con retroalimentación inmediata para validar el aprendizaje.
+AIPI (**AI Personal Instructor**) is an educational **Expert System** developed using **Python** and **Flask** to assist students and developers in selecting the most appropriate **Machine Learning algorithm** for a given problem.
 
-### 🎮 Gamificación y UX
-* **Niveles de Usuario:** Sube de rango ("Novato" ➔ "Estudiante" ➔ "Científico de Datos") conforme interactúas con el sistema.
-* **Gestión de Chats:** Crea, cambia y borra conversaciones múltiples sin perder el contexto.
-* **Persistencia Local:** Sistema de guardado de progreso automático y función de "Hard Reset".
+Unlike a traditional decision tree, AIPI acts as an **intelligent tutor**. It not only recommends an algorithm but also explains **why** it is the best option through:
 
-### 📊 Panel de Administración
-* **Feedback Loop:** Los usuarios pueden votar (Like/Dislike) sobre las recomendaciones.
-* **Dashboard Oculto:** Visualización de métricas de satisfacción en tiempo real en la ruta `/admin`.
+- Interactive guided diagnosis
+- Rule-based inference (Forward Chaining)
+- Code examples
+- Line-by-line explanations
+- Algorithm comparisons
+- Interactive quizzes
+
+The objective is to help users understand Machine Learning concepts while improving their decision-making skills.
 
 ---
 
-## 🚀 Instalación y Ejecución
+# 📸 Application Preview
 
-Sigue estos pasos para correr el proyecto en tu computadora local:
+> *(Replace the following images with screenshots of your application.)*
 
-### 1. Clonar el repositorio
-git clone [https://github.com/TU_USUARIO/AIPI-System.git](https://github.com/TU_USUARIO/AIPI-System.git)
-cd AIPI-System
+## Home Page
 
-##2. Crear un entorno virtual (Recomendado)
-# En Windows:
+![Home](screenshots/home.png)
+
+---
+
+## Chat Interface
+
+![Chat](screenshots/chat.png)
+
+---
+
+## Recommendation Example
+
+![Recommendation](screenshots/recommendation.png)
+
+---
+
+## Quiz Module
+
+![Quiz](screenshots/quiz.png)
+
+---
+
+## Administration Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+# ✨ Features
+
+## 🎓 Educational Module
+
+- Interactive diagnosis through guided questions.
+- Rule-based recommendation system using Forward Chaining.
+- Line-by-line explanation of generated code.
+- Technical comparison between recommended algorithms.
+- Interactive quizzes for knowledge reinforcement.
+
+---
+
+## 🧠 Knowledge Base
+
+The expert system currently includes:
+
+### Regression
+
+- Lasso Regression
+- Support Vector Regression (SVR)
+- SGD Regressor
+
+### Classification
+
+- Naive Bayes
+- Linear SVC
+- K-Nearest Neighbors (KNN)
+- Random Forest
+
+### Clustering
+
+- K-Means
+- DBSCAN
+
+---
+
+## 🎮 Gamification
+
+- User level progression
+- Multiple conversations
+- Persistent chat history
+- Automatic progress saving
+- Hard Reset option
+
+---
+
+## 📊 Administration Dashboard
+
+Administrators can monitor:
+
+- User satisfaction
+- Likes and dislikes
+- Recommendation statistics
+
+Accessible through:
+
+```
+/admin
+```
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                    User
+                      │
+                      ▼
+             Flask Web Interface
+                      │
+                      ▼
+             Inference Engine
+                      │
+                      ▼
+             Knowledge Base
+                      │
+                      ▼
+          Algorithm Recommendation
+                      │
+          ┌───────────┴───────────┐
+          ▼                       ▼
+   Educational Module       Interactive Quiz
+```
+
+---
+
+# 🗂️ Project Structure
+
+```text
+AIPI/
+│
+├── app.py
+├── knowledge_base.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+│
+├── templates/
+│   ├── index.html
+│   └── admin.html
+│
+├── static/
+│   ├── style.css
+│   └── image/
+│
+└── screenshots/
+```
+
+---
+
+# 🛠️ Technologies
+
+### Programming Language
+
+- Python
+
+### Framework
+
+- Flask
+
+### Machine Learning
+
+- Scikit-Learn
+
+### Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+---
+
+# 🚀 Installation
+
+## Clone the repository
+
+```bash
+git clone https://github.com/ketzelG-22310245/AIPI-AI-Personal-Instructor-.git
+cd AIPI-AI-Personal-Instructor-
+```
+
+---
+
+## Create a virtual environment
+
+### Windows
+
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
-# En Mac/Linux:
+### Linux / macOS
+
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
-##3. Instalar dependencias
+---
+
+## Install dependencies
+
+```bash
 pip install -r requirements.txt
-4. Ejecutar la aplicación
-Bash
+```
+
+---
+
+## Run the application
+
+```bash
 python app.py
+```
 
-##5. Abrir en el navegador
-Ve a la siguiente dirección en tu navegador web: http://127.0.0.1:5000
-
-Para ver el panel de administración, ve a: http://127.0.0.1:5000/admin
 ---
-🧠 Base de Conocimientos
-El sistema cubre los siguientes algoritmos:
 
-Regresión: Lasso, SVR, SGD Regressor.
+## Open your browser
 
-Clasificación: Naive Bayes, Linear SVC, KNN, Random Forest.
+```
+http://127.0.0.1:5000
+```
 
-Clustering: K-Means, DBSCAN.
+Administration Dashboard
+
+```
+http://127.0.0.1:5000/admin
+```
+
 ---
-👨‍💻 Autor
-Ketzel Gibran Carrillo Ibarra
 
-Institución: CETI (Centro de Enseñanza Técnica Industrial)
+# 🎯 Future Improvements
 
-Carrera: Ingeniería Mecátronica
+- Add more Machine Learning algorithms.
+- User authentication.
+- Database integration.
+- Cloud deployment.
+- LLM integration for personalized tutoring.
+- Docker containerization.
+- User analytics dashboard.
+- Export learning reports.
 
-Materia: Sistemas Expertos
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the LICENSE file for more information.
+
+---
+
+# 👨‍💻 Author
+
+**Ketzel Gibran Carrillo Ibarra**
+
+Mechatronics Engineering Student
+
+Centro de Enseñanza Técnica Industrial (CETI)
+
+Interested in:
+
+- Robotics
+- Embedded Systems
+- Artificial Intelligence
+- Control Systems
+- Research & Development
+
+---
+
+# ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
